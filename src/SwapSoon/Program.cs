@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using SwapSoon.Data;
+using SwapSoon.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddSingleton<UrgencyCalculator>();
 
 var app = builder.Build();
 
